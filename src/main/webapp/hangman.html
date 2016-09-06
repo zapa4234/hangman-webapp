@@ -1,0 +1,50 @@
+<!doctype html>
+<head>
+<title>Hello</title>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+</head>
+<body>
+
+<div>
+  Word:
+  <span id="pattern"></span>
+</div>
+<div>
+  Guesses:
+  <span id="oldGuesses"></span>
+</div>
+<div>
+  Letter?
+  <input id="newGuesses" type="text" />
+  <button onclick="guess()">Submit</button>
+</div>
+<div id="fail">
+</div>
+
+<script>
+$(function() {
+  $.get("/rest/start",
+        function(thestart) {
+          $("#pattern").text(thestart);
+        });
+});
+
+function guess() {
+  var oldPattern = $("#pattern").text();
+  var oldGuesses = $("#oldGuesses").text();
+  var newGuesses = $("#newGuesses").val();
+  $.get("/rest/match",
+        { oldPattern: oldPattern, oldGuesses: oldGuesses, newGuesses: newGuesses },
+        function(newPattern) {
+          $("#pattern").text(newPattern);
+          $("#oldGuesses").append(newGuesses);
+          $("#newGuesses").val("");
+        })
+   .fail(function(jqXHR, textStatus, errorThrown) {
+           $("#fail").text(textStatus + ": " + errorThrown);
+         });
+};
+</script>
+
+</body>
+</html>
