@@ -5,30 +5,13 @@
 </head>
 <body>
 
-<div>
-  Word:
-  <span id="pattern"></span>
-</div>
-<div>
-  Guesses:
-  <span id="oldGuesses"></span>
-</div>
-<div>
-  Letter?
-  <input id="newGuesses" type="text" />
-  <button onclick="guess()">Submit</button>
-</div>
-<div id="fail">
-</div>
+<div>Word: <span id="pattern"></span></div>
+<div>Guesses: <span id="oldGuesses"></span></div>
+<div>Letter? <input id="newGuesses" type="text" />
+             <button id="submit">Submit</button></div>
+<div id="fail"></div>
 
 <script>
-$(function() {
-  $.get("/rest/start",
-        function(thestart) {
-          $("#pattern").text(thestart);
-        });
-});
-
 function guess() {
   var oldPattern = $("#pattern").text();
   var oldGuesses = $("#oldGuesses").text();
@@ -44,6 +27,14 @@ function guess() {
            $("#fail").text(textStatus + ": " + errorThrown);
          });
 };
+
+$(function() {
+  $.get("/rest/start",
+        function(thestart) {
+          $("#pattern").text(thestart);
+          $("#submit").click(guess);
+        });
+});
 </script>
 
 </body>
