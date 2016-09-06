@@ -32,10 +32,10 @@ public class Hangman {
      * namely where the letter in that position is one of the letters in
      * guess, and the remaining positions in word are dots.
      */
-    public String match(String guess) {
+    public String match(String guesses) {
         StringBuilder pattern = new StringBuilder();
         for (char c : word.toCharArray()) {
-            if (guess.indexOf(c) == -1) {
+            if (guesses.indexOf(c) == -1) {
                 pattern.append('.');
             } else {
                 pattern.append(c);
