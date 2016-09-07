@@ -22,6 +22,7 @@ function guess() {
           $("#pattern").text(newPattern);
           $("#oldGuesses").append(newGuesses);
           $("#newGuesses").val("");
+          $("#newGuesses").focus();
         })
    .fail(function(jqXHR, textStatus, errorThrown) {
            $("#fail").text(textStatus + ": " + errorThrown);
@@ -33,6 +34,7 @@ $(function() {
         function(thestart) {
           $("#pattern").text(thestart);
           $("#submit").click(guess);
+          $("#newGuesses").focus();
         });
 });
 </script>
