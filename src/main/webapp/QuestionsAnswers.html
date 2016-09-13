@@ -1,0 +1,50 @@
+<!doctype html>
+<head>
+<title>QuestionsAnswers</title>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+</head>
+<body>
+
+
+<div>Question: <span id="question"> </span>
+<input type="text" id="answer" >
+             <button id="submit"  onclick= "checkAnswer()" >Submit</button></div>
+<div id="result"></div> 
+
+<script>
+function checkAnswer() {
+  var answer = $("#answer").val();
+  var question = $("#question").text();
+
+  $.get("/rest/testanswer",
+        { answer: answer, question: question },
+        function(newQuestion) {
+          $("#result").text(newQuestion);
+          $("#answer").val("");
+          $("#question").focus();
+        })
+   .fail(function(jqXHR, textStatus, errorThrown) {
+           $("#result").text( "'" + answer + "' is not the correct answer to '" + question + "'");
+         });
+   $.get("/rest/randomquestion", 
+        function(thestart) {
+          $("#question").text(thestart);
+          $("#answer").val("");
+        });
+};
+
+$(function() {
+  $.get("/rest/randomquestion",
+        function(thestart) {
+          $("#question").text(thestart);
+         
+        });
+
+
+});
+
+</script>
+</body>
+</html>
+
+
